@@ -1,11 +1,16 @@
 package org.example.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class BudgetCategory {
     private String name;
     private double budgetLimit;
     private double spent;
 
-    private BudgetCategory(String name, double budgetLimit) {
+    public BudgetCategory(String name, double budgetLimit) {
         this.name = name;
         this.budgetLimit = budgetLimit;
         this.spent = 0.0;
@@ -18,6 +23,6 @@ public class BudgetCategory {
         }
         spent += amount;
     }
-    
+
 
 }

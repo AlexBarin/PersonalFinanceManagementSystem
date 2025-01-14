@@ -1,6 +1,8 @@
 package org.example.services;
 
+import lombok.Getter;
 import org.example.models.User;
+import org.example.models.Wallet;
 import org.example.persistence.PersistenceManager;
 
 import java.nio.file.Files;
@@ -8,7 +10,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+
 /// make all method private (only US and menu public)
+@Getter
 public class UserService {
     private static final String DATA_DIRECTORY = "data";
     private PersistenceManager persistenceManager;
@@ -17,7 +21,12 @@ public class UserService {
     public UserService(PersistenceManager persistenceManager) {
         this.persistenceManager = persistenceManager;
     }
-
+    public Wallet getWallet() {
+        return currentUser.getWallet();
+    }
+    public Wallet getCurrentUserWallet(){
+        return currentUser.getWallet();
+    }
     public boolean authenticate(String username, String password) {
         Path filePath = Paths.get(DATA_DIRECTORY, username + ".json");
 
@@ -28,6 +37,7 @@ public class UserService {
         currentUser = persistenceManager.loadUser(username);
         if(!currentUser.access(password)){
             System.out.println("Неверный пароль");
+            currentUser = null;
             return false;
         }
         System.out.println("Вход успеный!");
@@ -44,7 +54,10 @@ public class UserService {
         persistenceManager.saveUser(currentUser);
     }
 
-
+    public void registerUser(String username, String password) {
+        currentUser =new User(username, password);
+        System.out.println("Пользователь успешно зарегистрирован: " + username);
+    }
     public void menu(Scanner scanner) {
         if (currentUser == null) {
             String username;

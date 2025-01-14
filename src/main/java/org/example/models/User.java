@@ -1,7 +1,9 @@
 package org.example.models;
 
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public class User {
     private String username;
@@ -11,10 +13,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password.hashCode();
-        this.wallet = Wallet.createWallet();//If user new, then new, else download from xml
-    }
-    public String getUsername() {
-        return username;
+        this.wallet = new Wallet();//If user new, then new, else download from xml
     }
 
     public boolean access(String password) {
